@@ -1,0 +1,25 @@
+# docker
+Dockerfile
+.dockerignore
+
+# dependencies
+node_modules
+
+# next.js
+.next
+/out/
+
+# debug
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# tests
+jest.config.js
+jest.setup.ts
+*/__tests__/
+/coverage
+
+# markdown files
+README.md
+CHANGELOG.md
