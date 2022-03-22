@@ -1,13 +1,17 @@
 import Head from 'next/head';
+import Sidebar from '../components/sidebar';
 
 const Home = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div>
       <Head>
-        <title>Create Next App</title>
+        <title>Kwetter</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>lol</h1>
+
+      <main className="bg-black min-h-screen flex max-w-[93.75em] mx-auto">
+        <Sidebar/>
+      </main>
     </div>
   );
 };
