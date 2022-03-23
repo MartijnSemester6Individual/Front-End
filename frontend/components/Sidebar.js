@@ -1,5 +1,8 @@
 import Image from 'next/image';
 import { HomeIcon } from '@heroicons/react/solid';
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+
 import {
   HashtagIcon,
   BellIcon,
@@ -13,6 +16,7 @@ import {
 import SidebarLink from './SidebarLink';
 
 function Sidebar() {
+  const { data: session } = useSession();
   return (
     <div className="fixed hidden h-full flex-col items-center p-2 sm:flex xl:w-[340px] xl:items-start">
       <div className="hoverAnimation flex h-14 w-14 items-center justify-center p-0 xl:ml-24">
@@ -35,19 +39,19 @@ function Sidebar() {
         Tweet
       </button>
       <div
-        className="hoverAnimation mt-auto flex items-center 
-            justify-center text-twitter-white xl:ml-auto xl:-mr-5"
+        className="text-twitter-white flex items-center justify-center mt-auto hoverAnimation xl:ml-auto xl:-mr-5"
+        onClick={signOut}
       >
         <img
-          className="h-10 w-10 rounded-full xl:mr-2.5"
-          src="https://yt3.ggpht.com/yti/APfAmoHMKH1J_tx53DJDAcJNqIpfD565RP6in4FZuw=s88-c-k-c0x00ffffff-no-rj-mo"
+          src={session.user.image}
           alt=""
+          className="h-10 w-10 rounded-full xl:mr-2.5"
         />
-        <div className="hidden leading-5 xl:inline">
-          <h4 className="font-bold">martijnbassa</h4>
-          <p className="text-twitter-tag-colour">@martijnbassa2000</p>
+        <div className="hidden xl:inline leading-5">
+          <h4 className="font-bold">{session.user.name}</h4>
+          <p className="text-[#6e767d]">@{session.user.tag}</p>
         </div>
-        <DotsHorizontalIcon className="ml-10 hidden h-5 xl:inline" />
+        <DotsHorizontalIcon className="h-5 hidden xl:inline ml-10" />
       </div>
     </div>
   );

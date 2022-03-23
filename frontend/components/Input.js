@@ -12,8 +12,10 @@ import dynamic from 'next/dynamic';
 import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
 import TextareaAutosize from 'react-textarea-autosize';
+import { useSession } from "next-auth/react";
 
 function Input() {
+  const { data: session } = useSession();
   const [input, setInput] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [showEmojis, setShowEmojis] = useState(false);
@@ -32,11 +34,7 @@ function Input() {
   };
 
   const addEmoji = (e) => {
-    let sym = e.unified.split('-');
-    let codesArray = [];
-    sym.forEach((el) => codesArray.push('0x' + el));
-    let emoji = String.fromCodePoint(...codesArray);
-    setInput(input + emoji);
+    setInput(input + e.native)
   };
 
   const sendPost = (e) => {
@@ -58,7 +56,7 @@ function Input() {
       }`}
     >
       <img
-        src="https://yt3.ggpht.com/yti/APfAmoHMKH1J_tx53DJDAcJNqIpfD565RP6in4FZuw=s88-c-k-c0x00ffffff-no-rj-mo"
+        src={session.user.image}
         alt=""
         className="h-11 w-11 cursor-pointer rounded-full"
       />
