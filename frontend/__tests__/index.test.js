@@ -1,14 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import Home from '../pages/index';
 
-describe('Home', () => {
-  it('renders a heading', () => {
+describe('Page title', () => {
+  it('should render the title', () => {
     render(<Home />);
 
-    const heading = screen.getByRole('heading', {
-      name: /welcome to next\.js!/i,
-    });
-
-    expect(heading).toBeInTheDocument();
+    waitFor(() => {
+      expect(document.title).toEqual("Kwetter")
+    })
   });
 });
