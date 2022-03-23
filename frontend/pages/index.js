@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Feed from '../components/Feed';
-import Sidebar from '../components/sidebar';
+import Sidebar from '../components/Sidebar';
 
 const Home = () => {
   return (
