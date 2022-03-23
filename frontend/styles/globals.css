@@ -6,6 +6,7 @@
     body {
         @apply bg-black;
     }
+
 }
 
 @layer components {
@@ -13,5 +14,19 @@
         @apply hover:bg-[#d9d9d9] hover:bg-opacity-10 rounded-full cursor-pointer
         w-[3.25em] h-[3.25em] xl:w-auto xl:h-auto xl:py-3 xl:px-4
         transition duration-200 ease-out;
+    }
+
+    .icon {
+        @apply cursor-pointer w-9 h-9 hover:bg-twitter-blue-hover hover:bg-opacity-10 flex items-center justify-center rounded-full transition ease-out;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+        overflow: hidden;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
     }
 }

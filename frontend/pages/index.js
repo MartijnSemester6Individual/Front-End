@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Feed from '../components/Feed';
 import Sidebar from '../components/sidebar';
 
 const Home = () => {
@@ -11,6 +12,7 @@ const Home = () => {
 
       <main className="bg-black min-h-screen flex max-w-[93.75em] mx-auto">
         <Sidebar/>
+        <Feed/>
       </main>
     </div>
   );
