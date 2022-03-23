@@ -10,9 +10,9 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="bg-black min-h-screen flex max-w-[93.75em] mx-auto">
-        <Sidebar/>
-        <Feed/>
+      <main className="mx-auto flex min-h-screen max-w-[93.75em] bg-black">
+        <Sidebar />
+        <Feed />
       </main>
     </div>
   );

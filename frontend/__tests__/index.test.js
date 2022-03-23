@@ -6,7 +6,7 @@ describe('Page title', () => {
     render(<Home />);
 
     waitFor(() => {
-      expect(document.title).toEqual("Kwetter")
-    })
+      expect(document.title).toEqual('Kwetter');
+    });
   });
 });
