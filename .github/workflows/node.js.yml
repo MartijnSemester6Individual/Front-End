@@ -32,11 +32,6 @@ jobs:
         cache-dependency-path: frontend/package-lock.json
     - name: install
       run: npm ci
-    - name: Run linters
-      uses: wearerequired/lint-action@v1
-      with:
-        eslint: true
-        prettier: true
     - name: tests
       run: npm run test:coverage
     - name: lint and build # Nest.js will fail to compile if the linting fails.
