@@ -7,16 +7,18 @@ import {
   LocationMarkerIcon,
   VideoCameraIcon,
 } from '@heroicons/react/outline';
-import { useRef, useState } from 'react';
-import dynamic from 'next/dynamic';
-import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
+import { useRef, useState } from 'react';
+import { Picker } from 'emoji-mart';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useSession } from "next-auth/react";
+import axios from 'axios';
 
 function Input() {
   const { data: session } = useSession();
   const [input, setInput] = useState('');
+  const [likeCount, setLikeCount] = useState(null);
+  const [retweetCount, setRetweetCount] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [showEmojis, setShowEmojis] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -37,14 +39,30 @@ function Input() {
     setInput(input + e.native)
   };
 
-  const sendPost = (e) => {
+  const sendPost = () => {
     if (loading) return;
     setLoading(true);
 
     // axios post request to backend to post
-
+    axios.post('http://localhost:8080/api/v2/tweet', {
+      tweetUserName: session.user.name,
+      tweetUserTag: session.user.tag,
+      tweetText: input,
+      tweetTimeStamp: Date().toLocaleString(),
+      retweetCount:retweetCount,
+      likeCount: likeCount
+    }, {
+      headers: {'Content-Type': 'application/json'}
+    }).then(function(response) {
+        console.log(response)
+    }).catch(function(error) {
+      console.log(error);
+    })
+    
     setLoading(false);
     setInput('');
+    setLikeCount(null);
+    setRetweetCount(null);
     setSelectedFile(null);
     setShowEmojis(false);
   };
