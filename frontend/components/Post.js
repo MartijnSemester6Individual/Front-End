@@ -87,7 +87,7 @@ function Post({ id, post, postPage }) {
                         </div>{' '}
                         ·{' '}
                         <span className="text-sm hover:underline sm:text-[0.9375em]">
-                            {/* <Moment fromNow>{post?.tweetTimeStamp?.toDate()}</Moment> */}
+                            {<Moment fromNow>{post?.tweetTimeStamp}</Moment>} 
                         </span>
                         {!postPage && (
                             <p className="mt-0.5 text-[0.9375em] text-twitter-white sm:text-base">
