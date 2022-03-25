@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { HomeIcon } from '@heroicons/react/solid';
-import { signOut } from "next-auth/react";
-import { useSession } from "next-auth/react";
+import { signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 import {
   HashtagIcon,
@@ -39,19 +39,15 @@ function Sidebar() {
         Tweet
       </button>
       <div
-        className="text-twitter-white flex items-center justify-center mt-auto hoverAnimation xl:ml-auto xl:-mr-5"
+        className="hoverAnimation mt-auto flex items-center justify-center text-twitter-white xl:ml-auto xl:-mr-5"
         onClick={signOut}
       >
-        <img
-          src={session.user.image}
-          alt=""
-          className="h-10 w-10 rounded-full xl:mr-2.5"
-        />
-        <div className="hidden xl:inline leading-5">
+        <img src={session.user.image} alt="" className="h-10 w-10 rounded-full xl:mr-2.5" />
+        <div className="hidden leading-5 xl:inline">
           <h4 className="font-bold">{session.user.name}</h4>
           <p className="text-[#6e767d]">@{session.user.tag}</p>
         </div>
-        <DotsHorizontalIcon className="h-5 hidden xl:inline ml-10" />
+        <DotsHorizontalIcon className="ml-10 hidden h-5 xl:inline" />
       </div>
     </div>
   );

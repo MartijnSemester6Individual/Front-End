@@ -6,85 +6,115 @@ import {
     ShareIcon,
     SwitchHorizontalIcon,
     TrashIcon,
-} from "@heroicons/react/outline";
-import {
-    HeartIcon as HeartIconFilled,
-    ChatIcon as ChatIconFilled,
-} from "@heroicons/react/solid";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-// import Moment from "react-moment";
-// import { useRecoilState } from "recoil";
-// import { modalState, postIdState } from "../atoms/modalAtom";
+} from '@heroicons/react/outline';
+import { HeartIcon as HeartIconFilled, ChatIcon as ChatIconFilled } from '@heroicons/react/solid';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import Moment from 'react-moment';
+import { useRecoilState } from 'recoil';
+import { modalState, postIdState } from "../atoms/modalAtom";
+import axios from 'axios';
 
 function Post({ id, post, postPage }) {
     const { data: session } = useSession();
-    //const [isOpen, setIsOpen] = useRecoilState(modalState);
-    //const [postId, setPostId] = useRecoilState(postIdState);
+    const [isOpen, setIsOpen] = useRecoilState(modalState);
+    const [postId, setPostId] = useRecoilState(postIdState);
     const [comments, setComments] = useState([]);
     const [likes, setLikes] = useState([]);
     const [liked, setLiked] = useState(false);
     const router = useRouter();
 
-    const likePost = async () => {
+    const url = `http://localhost:8080/api/v2/tweets/${id}`
 
+    const likePost = async () => { 
+        if(liked) {
+            
+        }
+    };
+
+    const deletePost = async (e) => {
+        await axios.delete(url)
     };
 
     return (
-        <div className="p-3 flex cursor-pointer border-b border-gray-700"
-            onClick={() => router.push(`/${id}`)}
+        <div
+            className="flex cursor-pointer border-b border-gray-700 p-3"
+            onClick={() => router.push(`/${post.tweetUserTag}/status/${id}`)}
         >
             {!postPage && (
                 <img
-                    src={/*post?.tweetImage*/session.user.image}
-                    alt=""
-                    className="h-11 w-11 rounded-full mr-4"
+                    src={post?.tweetUserImage}
+                    alt="Profile Pic"
+                    className="mr-4 h-11 w-11 rounded-full"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        router.push(`/${post.tweetUserTag}`)
+                    }
+                    }
                 />
             )}
-            <div className="flex flex-col space-y-2 w-full">
-                <div className={`flex ${!postPage && "justify-between"}`}>
+            <div className="flex w-full flex-col space-y-2">
+                <div className={`flex ${!postPage && 'justify-between'}`}>
                     {postPage && (
                         <img
-                            src={/*post?.tweetImage*/session.user.image}
+                            src={post?.tweetUserImage}
                             alt="Profile Pic"
-                            className="h-11 w-11 rounded-full mr-4"
+                            className="mr-4 h-11 w-11 rounded-full"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                router.push(`/${post.tweetUserTag}`)
+                            }
+                            }
                         />
                     )}
                     <div className="text-twitter-tag-colour">
-                        <div className="inline-block">
-                            <h4 className={`font-bold text-[0.9375em] sm:text-base text-twitter-white hover:underline ${!postPage && "inline-block"}`}>
+                        <div className="inline-block"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                router.push(`/${post.tweetUserTag}`)
+                            }}
+                        >
+                            <h4
+                                className={`text-[0.9375em] font-bold text-twitter-white hover:underline sm:text-base ${!postPage && 'inline-block'
+                                    }`}
+                            >
                                 {post?.tweetUserName}
                             </h4>
-                            <span className={`text-sm sm:text-[0.9375em] ${!postPage && "ml-1.5"}`}>
+                            <span className={`text-sm sm:text-[0.9375em] ${!postPage && 'ml-1.5'}`}>
                                 @{post?.tweetUserTag}
                             </span>
-                        </div>{" "}
-                        ·{" "}
-                        <span className="hover:underline text-sm sm:text-[0.9375em]">
+                        </div>{' '}
+                        ·{' '}
+                        <span className="text-sm hover:underline sm:text-[0.9375em]">
                             {/* <Moment fromNow>{post?.tweetTimeStamp?.toDate()}</Moment> */}
                         </span>
                         {!postPage && (
-                            <p className="text-twitter-white text-[0.9375em] sm:text-base mt-0.5">{post?.tweetText}</p>
+                            <p className="mt-0.5 text-[0.9375em] text-twitter-white sm:text-base">
+                                {post?.tweetText}
+                            </p>
                         )}
                     </div>
-                    <div className="icon group flex-shrink-0 ml-auto">
+                    <div className="icon group ml-auto flex-shrink-0">
                         <DotsHorizontalIcon className="h-5 text-twitter-tag-colour group-hover:text-[#1d9bf0]" />
                     </div>
                 </div>
                 {postPage && (
-                    <p className="text-twitter-white text-[0.9375em] sm:text-base mt-0.5">
+                    <p className="mt-0.5 text-[0.9375em] text-twitter-white sm:text-base">
                         {post?.tweetText}
                     </p>
                 )}
-                <img src={/*post?.tweetImage*/session.user.image} alt="" className="rounded-2xl max-h-[30em] object-cover mr-2"
+                <img
+                    src={post?.tweetImage}
+                    alt=""
+                    className="mr-2 max-h-[30em] rounded-2xl object-cover"
                 />
-                <div className={`text-twitter-tag-colour flex justify-between w-10/12 ${postPage && (
-                    "mx-auto"
-                )}`}
+                <div
+                    className={`flex w-10/12 justify-between text-twitter-tag-colour ${postPage && 'mx-auto'
+                        }`}
                 >
                     <div
-                        className="flex items-center space-x-1 group"
+                        className="group flex items-center space-x-1"
                         onClick={(e) => {
                             e.stopPropagation();
                             setPostId(id);
@@ -95,19 +125,17 @@ function Post({ id, post, postPage }) {
                             <ChatIcon className="h-5 group-hover:text-twitter-blue-hover" />
                         </div>
                         {comments.length > 0 && (
-                            <span className="group-hover:text-twitter-blue-hover text-sm">
-                                {comments.length}
-                            </span>
+                            <span className="text-sm group-hover:text-twitter-blue-hover">{comments.length}</span>
                         )}
                     </div>
 
-                    {session.user.uid == post?.id ? (
+                    {session.user.uid == post?.tweetUserId ? (
                         <div
-                            className="flex items-center space-x-1 group"
+                            className="group flex items-center space-x-1"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                //deleteDoc(doc(db, "posts", id));
-                                router.push("/");
+                                deletePost();
+                                router.push('/');
                             }}
                         >
                             <div className="icon group-hover:bg-red-600/10">
@@ -115,14 +143,14 @@ function Post({ id, post, postPage }) {
                             </div>
                         </div>
                     ) : (
-                        <div className="flex items-center space-x-1 group">
+                        <div className="group flex items-center space-x-1">
                             <div className="icon group-hover:bg-green-500/10">
                                 <SwitchHorizontalIcon className="h-5 group-hover:text-green-500" />
                             </div>
                         </div>
                     )}
 
-                    {/* <div
+                    <div
                         className="flex items-center space-x-1 group"
                         onClick={(e) => {
                             e.stopPropagation();
@@ -144,18 +172,18 @@ function Post({ id, post, postPage }) {
                                 {likes.length}
                             </span>
                         )}
-                    </div> */}
+                    </div>
 
-                    {/* <div className="icon group">
+                    <div className="icon group">
                         <ShareIcon className="h-5 group-hover:text-[#1d9bf0]" />
                     </div>
                     <div className="icon group">
                         <ChartBarIcon className="h-5 group-hover:text-[#1d9bf0]" />
-                    </div> */}
+                    </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default Post
+export default Post;

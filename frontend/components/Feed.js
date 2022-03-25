@@ -1,6 +1,6 @@
 import { SparklesIcon } from '@heroicons/react/outline';
 import Input from './Input';
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Post from './Post';
 
@@ -9,8 +9,8 @@ function Feed() {
 
   useEffect(() => {
     const getPosts = async () => {
-      const response = await axios.get('http://localhost:8080/api/v2/tweets')
-      setPosts(response.data)
+      const response = await axios.get('http://localhost:8080/api/v2/tweets');
+      setPosts(response.data);
     };
     getPosts();
   }, []);
@@ -29,6 +29,7 @@ function Feed() {
         {posts.map((post) => (
           <Post key={post.tweetId} id={post.tweetId} post={post} />
         ))}
+        {console.log(posts)}
       </div>
     </div>
   );

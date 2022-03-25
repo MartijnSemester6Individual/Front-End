@@ -11,7 +11,7 @@ import 'emoji-mart/css/emoji-mart.css';
 import { useRef, useState } from 'react';
 import { Picker } from 'emoji-mart';
 import TextareaAutosize from 'react-textarea-autosize';
-import { useSession } from "next-auth/react";
+import { useSession } from 'next-auth/react';
 import axios from 'axios';
 
 function Input() {
@@ -36,7 +36,7 @@ function Input() {
   };
 
   const addEmoji = (e) => {
-    setInput(input + e.native)
+    setInput(input + e.native);
   };
 
   const sendPost = () => {
@@ -44,21 +44,31 @@ function Input() {
     setLoading(true);
 
     // axios post request to backend to post
-    axios.post('http://localhost:8080/api/v2/tweet', {
-      tweetUserName: session.user.name,
-      tweetUserTag: session.user.tag,
-      tweetText: input,
-      tweetTimeStamp: Date().toLocaleString(),
-      retweetCount:retweetCount,
-      likeCount: likeCount
-    }, {
-      headers: {'Content-Type': 'application/json'}
-    }).then(function(response) {
-        console.log(response)
-    }).catch(function(error) {
-      console.log(error);
-    })
-    
+    axios
+      .post(
+        'http://localhost:8080/api/v2/tweet',
+        {
+          tweetUserId: session.user.uid,
+          tweetUserName: session.user.name,
+          tweetUserImage: session.user.image,
+          tweetImage: "https://rb.gy/1q2s0t",
+          tweetUserTag: session.user.tag,
+          tweetText: input,
+          tweetTimeStamp: Date().toLocaleString(),
+          retweetCount: retweetCount,
+          likeCount: likeCount,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        },
+      )
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
     setLoading(false);
     setInput('');
     setLikeCount(null);
@@ -73,11 +83,7 @@ function Input() {
         loading && 'opacity-60'
       }`}
     >
-      <img
-        src={session.user.image}
-        alt=""
-        className="h-11 w-11 cursor-pointer rounded-full"
-      />
+      <img src={session.user.image} alt="" className="h-11 w-11 cursor-pointer rounded-full" />
       <div className="w-full divide-y divide-gray-700">
         <div className={`${selectedFile && 'pb-7'} ${input && 'space-y-2.5'}`}>
           <TextareaAutosize
