@@ -29,7 +29,6 @@ function Feed() {
         {posts.map((post) => (
           <Post key={post.tweetId} id={post.tweetId} post={post} />
         ))}
-        {console.log(posts)}
       </div>
     </div>
   );
