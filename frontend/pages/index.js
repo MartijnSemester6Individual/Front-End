@@ -2,15 +2,16 @@ import Head from 'next/head';
 import Feed from '../components/Feed';
 import Sidebar from '../components/Sidebar';
 import Login from '../components/Login';
-import Modal from '../components/Modal'
+import Modal from '../components/Modal';
 import { useRecoilState } from 'recoil';
-import { modalState } from "../atoms/modalAtom";
+import { modalState } from '../atoms/modalAtom';
 import { getProviders, getSession, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const Home = ({ trendingResults, followResults, providers }) => {
-
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useRecoilState(modalState);
+  const router = useRouter();
 
   if (!session) return <Login providers={providers} />;
   return (
@@ -23,7 +24,7 @@ const Home = ({ trendingResults, followResults, providers }) => {
       <main className="mx-auto flex min-h-screen max-w-[93.75em] bg-black">
         <Sidebar />
         <Feed />
-        {isOpen && <Modal/>}
+        {isOpen && <Modal />}
       </main>
     </div>
   );

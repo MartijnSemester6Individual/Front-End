@@ -13,6 +13,7 @@ import { Picker } from 'emoji-mart';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 function Input() {
   const { data: session } = useSession();
@@ -23,6 +24,7 @@ function Input() {
   const [showEmojis, setShowEmojis] = useState(false);
   const [loading, setLoading] = useState(false);
   const filePickerRef = useRef(null);
+  const router = useRouter();
 
   const addImageToPost = (e) => {
     const reader = new FileReader();
@@ -39,7 +41,7 @@ function Input() {
     setInput(input + e.native);
   };
 
-  const sendPost = () => {
+  const sendPost = (e) => {
     if (loading) return;
     setLoading(true);
 
@@ -51,7 +53,7 @@ function Input() {
           tweetUserId: session.user.uid,
           tweetUserName: session.user.name,
           tweetUserImage: session.user.image,
-          tweetImage: "https://rb.gy/1q2s0t",
+          tweetImage: 'https://rb.gy/1q2s0t',
           tweetUserTag: session.user.tag,
           tweetText: input,
           tweetTimeStamp: Date().toLocaleString(),
@@ -75,6 +77,8 @@ function Input() {
     setRetweetCount(null);
     setSelectedFile(null);
     setShowEmojis(false);
+
+    router.reload('')
   };
 
   return (
@@ -83,7 +87,7 @@ function Input() {
         loading && 'opacity-60'
       }`}
     >
-      <img src={session.user.image} alt="" className="h-11 w-11 cursor-pointer rounded-full" />
+      <img src={session.user.image} alt="" className="rounded-full cursor-pointer h-11 w-11" />
       <div className="w-full divide-y divide-gray-700">
         <div className={`${selectedFile && 'pb-7'} ${input && 'space-y-2.5'}`}>
           <TextareaAutosize
@@ -102,7 +106,7 @@ function Input() {
               >
                 <XIcon className="h-5 text-white" />
               </div>
-              <img src={selectedFile} alt="" className="max-h-80 rounded-2xl object-contain" />
+              <img src={selectedFile} alt="" className="object-contain max-h-80 rounded-2xl" />
             </div>
           )}
         </div>
@@ -118,7 +122,7 @@ function Input() {
               <div className="icon">
                 <VideoCameraIcon className="h-[1.375em] text-twitter-blue" />
               </div>
-              <div className="icon rotate-90">
+              <div className="rotate-90 icon">
                 <ChartBarIcon className="h-[1.375em] text-twitter-blue" />
               </div>
               <div className="icon" onClick={() => setShowEmojis(!showEmojis)}>

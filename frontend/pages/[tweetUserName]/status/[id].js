@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 function PostPage() {
-  return (
-    <div className="text-twitter-white">wtf</div>
-  )
+  return <div className="text-twitter-white">wtf</div>;
 }
 
-export default PostPage
+export default PostPage;
