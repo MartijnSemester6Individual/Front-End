@@ -38,27 +38,27 @@ function Post({ id, post, postPage }) {
 
   return (
     <div
-      className="flex p-3 border-b border-gray-700 cursor-pointer"
+      className="flex cursor-pointer border-b border-gray-700 p-3"
       onClick={() => router.push(`/${post.tweetUserTag}/status/${id}`)}
     >
       {!postPage && (
         <img
           src={post?.tweetUserImage}
           alt="Profile Pic"
-          className="mr-4 rounded-full h-11 w-11"
+          className="mr-4 h-11 w-11 rounded-full"
           onClick={(e) => {
             e.stopPropagation();
             router.push(`/${post.tweetUserTag}`);
           }}
         />
       )}
-      <div className="flex flex-col w-full space-y-2">
+      <div className="flex w-full flex-col space-y-2">
         <div className={`flex ${!postPage && 'justify-between'}`}>
           {postPage && (
             <img
               src={post?.tweetUserImage}
               alt="Profile Pic"
-              className="mr-4 rounded-full h-11 w-11"
+              className="mr-4 h-11 w-11 rounded-full"
               onClick={(e) => {
                 e.stopPropagation();
                 router.push(`/${post.tweetUserTag}`);
@@ -94,7 +94,7 @@ function Post({ id, post, postPage }) {
               </p>
             )}
           </div>
-          <div className="flex-shrink-0 ml-auto icon group">
+          <div className="icon group ml-auto flex-shrink-0">
             <DotsHorizontalIcon className="h-5 text-twitter-tag-colour group-hover:text-[#1d9bf0]" />
           </div>
         </div>
@@ -110,7 +110,7 @@ function Post({ id, post, postPage }) {
           }`}
         >
           <div
-            className="flex items-center space-x-1 group"
+            className="group flex items-center space-x-1"
             onClick={(e) => {
               e.stopPropagation();
               setPostId(id);
@@ -127,7 +127,7 @@ function Post({ id, post, postPage }) {
 
           {session.user.uid == post?.tweetUserId ? (
             <div
-              className="flex items-center space-x-1 group"
+              className="group flex items-center space-x-1"
               onClick={(e) => {
                 e.stopPropagation();
                 deletePost();
@@ -139,7 +139,7 @@ function Post({ id, post, postPage }) {
               </div>
             </div>
           ) : (
-            <div className="flex items-center space-x-1 group">
+            <div className="group flex items-center space-x-1">
               <div className="icon group-hover:bg-green-500/10">
                 <SwitchHorizontalIcon className="h-5 group-hover:text-green-500" />
               </div>
@@ -147,7 +147,7 @@ function Post({ id, post, postPage }) {
           )}
 
           <div
-            className="flex items-center space-x-1 group"
+            className="group flex items-center space-x-1"
             onClick={(e) => {
               e.stopPropagation();
               likePost();

@@ -78,7 +78,7 @@ function Input() {
     setSelectedFile(null);
     setShowEmojis(false);
 
-    router.reload('')
+    router.reload('');
   };
 
   return (
@@ -87,7 +87,7 @@ function Input() {
         loading && 'opacity-60'
       }`}
     >
-      <img src={session.user.image} alt="" className="rounded-full cursor-pointer h-11 w-11" />
+      <img src={session.user.image} alt="" className="h-11 w-11 cursor-pointer rounded-full" />
       <div className="w-full divide-y divide-gray-700">
         <div className={`${selectedFile && 'pb-7'} ${input && 'space-y-2.5'}`}>
           <TextareaAutosize
@@ -106,7 +106,7 @@ function Input() {
               >
                 <XIcon className="h-5 text-white" />
               </div>
-              <img src={selectedFile} alt="" className="object-contain max-h-80 rounded-2xl" />
+              <img src={selectedFile} alt="" className="max-h-80 rounded-2xl object-contain" />
             </div>
           )}
         </div>
@@ -122,7 +122,7 @@ function Input() {
               <div className="icon">
                 <VideoCameraIcon className="h-[1.375em] text-twitter-blue" />
               </div>
-              <div className="rotate-90 icon">
+              <div className="icon rotate-90">
                 <ChartBarIcon className="h-[1.375em] text-twitter-blue" />
               </div>
               <div className="icon" onClick={() => setShowEmojis(!showEmojis)}>
