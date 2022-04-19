@@ -1,19 +1,19 @@
 import Head from 'next/head';
 import Feed from '../components/Feed';
 import Sidebar from '../components/Sidebar';
-import Login from '../components/Login';
+import Login from './login';
 import Modal from '../components/Modal';
 import { useRecoilState } from 'recoil';
 import { modalState } from '../atoms/modalAtom';
 import { getProviders, getSession, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
-const Home = ({ trendingResults, followResults, providers }) => {
+const Home = ({ trendingResults, followResults }) => {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useRecoilState(modalState);
   const router = useRouter();
 
-  if (!session) return <Login providers={providers} />;
+  if (!session) return <Login />;
   return (
     <div>
       <Head>
@@ -34,14 +34,20 @@ export async function getServerSideProps(context) {
   const trendingResults = await fetch('https://jsonkeeper.com/b/NKEV').then((res) => res.json());
   const followResults = await fetch('https://jsonkeeper.com/b/WWMJ').then((res) => res.json());
 
-  const providers = await getProviders();
   const session = await getSession(context);
 
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
   return {
     props: {
       trendingResults,
       followResults,
-      providers,
       session,
     },
   };

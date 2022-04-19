@@ -44,7 +44,7 @@ function Sidebar() {
       >
         <img src={session.user.image} alt="" className="h-10 w-10 rounded-full xl:mr-2.5" />
         <div className="hidden leading-5 xl:inline">
-          <h4 className="font-bold">{session.user.name}</h4>
+          <h4 className="font-bold">{session.user.username}</h4>
           <p className="text-[#6e767d]">@{session.user.tag}</p>
         </div>
         <DotsHorizontalIcon className="ml-10 hidden h-5 xl:inline" />

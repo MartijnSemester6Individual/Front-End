@@ -9,7 +9,7 @@ function Feed() {
 
   useEffect(() => {
     const getPosts = async () => {
-      const response = await axios.get('http://localhost:8080/api/v2/tweets');
+      const response = await axios.get('http://localhost:8081/api/v2/tweets');
       setPosts(response.data);
     };
     getPosts();

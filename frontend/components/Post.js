@@ -25,7 +25,7 @@ function Post({ id, post, postPage }) {
   const [liked, setLiked] = useState(false);
   const router = useRouter();
 
-  const url = `http://localhost:8080/api/v2/tweets/${id}`;
+  const url = `http://localhost:8081/api/v2/tweets/${id}/${session.user.userId}`;
 
   const likePost = async () => {
     if (liked) {
@@ -74,9 +74,8 @@ function Post({ id, post, postPage }) {
               }}
             >
               <h4
-                className={`text-[0.9375em] font-bold text-twitter-white hover:underline sm:text-base ${
-                  !postPage && 'inline-block'
-                }`}
+                className={`text-[0.9375em] font-bold text-twitter-white hover:underline sm:text-base ${!postPage && 'inline-block'
+                  }`}
               >
                 {post?.tweetUserName}
               </h4>
@@ -105,9 +104,8 @@ function Post({ id, post, postPage }) {
         )}
         <img src={post?.tweetImage} alt="" className="mr-2 max-h-[30em] rounded-2xl object-cover" />
         <div
-          className={`flex w-10/12 justify-between text-twitter-tag-colour ${
-            postPage && 'mx-auto'
-          }`}
+          className={`flex w-10/12 justify-between text-twitter-tag-colour ${postPage && 'mx-auto'
+            }`}
         >
           <div
             className="group flex items-center space-x-1"
@@ -125,13 +123,13 @@ function Post({ id, post, postPage }) {
             )}
           </div>
 
-          {session.user.uid == post?.tweetUserId ? (
+          {session.user.userId == post?.tweetUserId ? (
             <div
               className="group flex items-center space-x-1"
               onClick={(e) => {
                 e.stopPropagation();
                 deletePost();
-                router.reload('');
+                router.reload('/');
               }}
             >
               <div className="icon group-hover:bg-red-600/10">
