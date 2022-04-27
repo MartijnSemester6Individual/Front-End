@@ -22,14 +22,10 @@ function Login({ csrfToken }) {
 
   return (
     <div className="grid place-items-center">
-      <Image src="https://rb.gy/1q2s0t"
-        width={250}
-        height={250}
-        objectFit="contain"
-      />
-      <div className="flex pt-0 bg-gray-bg1">
-        <div className="w-full max-w-md px-16 py-10 m-auto bg-white border rounded-lg border-primaryBorder">
-          <h1 className="mt-4 mb-12 text-2xl font-medium text-center text-primary">
+      <Image src="https://rb.gy/1q2s0t" width={250} height={250} objectFit="contain" alt="" />
+      <div className="bg-gray-bg1 flex pt-0">
+        <div className="border-primaryBorder m-auto w-full max-w-md rounded-lg border bg-white px-16 py-10">
+          <h1 className="text-primary mt-4 mb-12 text-center text-2xl font-medium">
             Log in to your account
           </h1>
 
@@ -40,7 +36,7 @@ function Login({ csrfToken }) {
                 Email
                 <input
                   type="email"
-                  className={`w-full p-2 text-primary border rounded-md outline-none text-sm mb-4`}
+                  className={`text-primary mb-4 w-full rounded-md border p-2 text-sm outline-none`}
                   id="email"
                   placeholder="Your Email"
                   value={email}
@@ -53,7 +49,7 @@ function Login({ csrfToken }) {
                 Password
                 <input
                   type="password"
-                  className={`w-full p-2 text-primary border rounded-md outline-none text-sm mb-4`}
+                  className={`text-primary mb-4 w-full rounded-md border p-2 text-sm outline-none`}
                   id="password"
                   placeholder="Your Password"
                   value={password}
@@ -63,7 +59,7 @@ function Login({ csrfToken }) {
             </div>
             <button
               type="submit"
-              className="min-w-full p-3 mt-4 text-center text-white cursor-pointer bg-black rounded-xl"
+              className="mt-4 min-w-full cursor-pointer rounded-xl bg-black p-3 text-center text-white"
               onClick={(e) => signInUser(e)}
             >
               Login to 4Energy
@@ -76,10 +72,7 @@ function Login({ csrfToken }) {
           <div className="pt-3 text-center">
             <p>
               Don&apos;t have an account?
-              <span className="text-black cursor-pointer">
-                {' '}
-                Register now!
-              </span>
+              <span className="cursor-pointer text-black"> Register now!</span>
             </p>
           </div>
         </div>

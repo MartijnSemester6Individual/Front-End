@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import { HomeIcon } from '@heroicons/react/solid';
 import { signOut } from 'next-auth/react';

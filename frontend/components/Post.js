@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {
   ChartBarIcon,
   ChatIcon,
@@ -74,8 +75,9 @@ function Post({ id, post, postPage }) {
               }}
             >
               <h4
-                className={`text-[0.9375em] font-bold text-twitter-white hover:underline sm:text-base ${!postPage && 'inline-block'
-                  }`}
+                className={`text-[0.9375em] font-bold text-twitter-white hover:underline sm:text-base ${
+                  !postPage && 'inline-block'
+                }`}
               >
                 {post?.tweetUserName}
               </h4>
@@ -104,8 +106,9 @@ function Post({ id, post, postPage }) {
         )}
         <img src={post?.tweetImage} alt="" className="mr-2 max-h-[30em] rounded-2xl object-cover" />
         <div
-          className={`flex w-10/12 justify-between text-twitter-tag-colour ${postPage && 'mx-auto'
-            }`}
+          className={`flex w-10/12 justify-between text-twitter-tag-colour ${
+            postPage && 'mx-auto'
+          }`}
         >
           <div
             className="group flex items-center space-x-1"

@@ -1,8 +1,7 @@
 import NextAuth from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
 import axios from 'axios';
-import jwt_decode from 'jwt-decode'
-
+import jwt_decode from 'jwt-decode';
 
 export default NextAuth({
   providers: [
@@ -45,7 +44,7 @@ export default NextAuth({
     async jwt({ token, user, account, profile, isNewUser }) {
       if (user !== undefined) {
         const beforeDecode = user;
-        const decodedToken = jwt_decode(beforeDecode)
+        const decodedToken = jwt_decode(beforeDecode);
         token.user = decodedToken;
       }
       return token;
@@ -54,7 +53,7 @@ export default NextAuth({
       if (token !== null) {
         session.user = token.user;
         session.user.userId = session.user.jti;
-        console.log(session)
+        console.log(session);
       } else if (typeof token !== typeof undefined) {
         session.token = token;
       }
