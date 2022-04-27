@@ -11,8 +11,9 @@ import 'emoji-mart/css/emoji-mart.css';
 import { useRef, useState } from 'react';
 import { Picker } from 'emoji-mart';
 import TextareaAutosize from 'react-textarea-autosize';
-import { useSession } from "next-auth/react";
+import { useSession } from 'next-auth/react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 function Input() {
   const { data: session } = useSession();
@@ -22,7 +23,12 @@ function Input() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [showEmojis, setShowEmojis] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [textLimitReached, setTextLimitReached] = useState(false);
+  const [textLimit, setTextLimit] = useState(160);
   const filePickerRef = useRef(null);
+  const router = useRouter();
+  const [isValid, setIsValid] = useState(false);
+
 
   const addImageToPost = (e) => {
     const reader = new FileReader();
@@ -36,56 +42,80 @@ function Input() {
   };
 
   const addEmoji = (e) => {
-    setInput(input + e.native)
+    setInput(input + e.native);
   };
+
+  const checkWhileTweeting = (e) => {
+    setInput(e.target.value);
+    checkForSpaces(input);
+
+
+  }
+
+  const checkForSpaces = (value) => {
+    if (!value.trim()) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  }
 
   const sendPost = () => {
     if (loading) return;
     setLoading(true);
 
-    // axios post request to backend to post
-    axios.post('http://localhost:8080/api/v2/tweet', {
-      tweetUserName: session.user.name,
-      tweetUserTag: session.user.tag,
-      tweetText: input,
-      tweetTimeStamp: Date().toLocaleString(),
-      retweetCount:retweetCount,
-      likeCount: likeCount
-    }, {
-      headers: {'Content-Type': 'application/json'}
-    }).then(function(response) {
-        console.log(response)
-    }).catch(function(error) {
-      console.log(error);
-    })
-    
-    setLoading(false);
-    setInput('');
-    setLikeCount(null);
-    setRetweetCount(null);
-    setSelectedFile(null);
-    setShowEmojis(false);
+    if (!isValid) {
+      axios
+        .post(
+          'http://localhost:8081/api/v2/tweet',
+          {
+            tweetUserId: session.user.userId,
+            tweetUserName: session.user.username,
+            tweetUserImage: session.user.image,
+            tweetImage: 'https://rb.gy/1q2s0t',
+            tweetUserTag: session.user.tag,
+            tweetText: input,
+            tweetTimeStamp: Date().toLocaleString(),
+            retweetCount: retweetCount,
+            likeCount: likeCount,
+          },
+          {
+            headers: { 'Content-Type': 'application/json' },
+          },
+        )
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+      setLoading(false);
+      setInput('');
+      setLikeCount(null);
+      setRetweetCount(null);
+      setSelectedFile(null);
+      setShowEmojis(false);
+
+      router.reload('');
+    }
   };
 
   return (
     <div
-      className={`no-scrollbar flex space-x-3 border-b border-gray-700 p-3 ${
-        loading && 'opacity-60'
-      }`}
+      className={`no-scrollbar flex space-x-3 border-b border-gray-700 p-3 ${loading && 'opacity-60'
+        }`}
     >
-      <img
-        src={session.user.image}
-        alt=""
-        className="h-11 w-11 cursor-pointer rounded-full"
-      />
+      <img src={session.user.image} alt="" className="h-11 w-11 cursor-pointer rounded-full" />
       <div className="w-full divide-y divide-gray-700">
         <div className={`${selectedFile && 'pb-7'} ${input && 'space-y-2.5'}`}>
           <TextareaAutosize
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => checkWhileTweeting(e)}
             rows="2"
             placeholder="What's happening?"
             className="no-scrollbar max-h-28 min-h-[3.125em] w-full bg-transparent text-lg tracking-wide text-twitter-white placeholder-gray-500 outline-none"
+            maxLength={160}
           />
 
           {selectedFile && (
@@ -124,7 +154,6 @@ function Input() {
               <div className="icon">
                 <LocationMarkerIcon className="h-[1.375em] text-twitter-blue" />
               </div>
-
               {showEmojis && (
                 <Picker
                   onSelect={addEmoji}
@@ -139,9 +168,14 @@ function Input() {
                 />
               )}
             </div>
+            <div
+              className="text-white pl-48"
+            >
+              {isValid.toString()}
+            </div>
             <button
               className="rounded-full bg-[#1d9bf0] px-4 py-1.5 font-bold text-white shadow-md hover:bg-twitter-blue-hover disabled:cursor-default disabled:opacity-50 disabled:hover:bg-twitter-blue"
-              disabled={!input && !selectedFile}
+              disabled={!input && !selectedFile || isValid}
               onClick={sendPost}
             >
               Tweet
