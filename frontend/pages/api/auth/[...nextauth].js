@@ -13,7 +13,7 @@ export default NextAuth({
       },
       async authorize(credentials, req) {
         const { data: user, status } = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`,
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
           credentials,
         );
         if (user && status === 200) {
