@@ -3,6 +3,9 @@
 The frontend of Martijn's individual project. It uses React and JavaScript.
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+[![Node CI](https://github.com/MartijnSemester6Individual/Front-End/actions/workflows/node.js.yml/badge.svg?branch=development)](https://github.com/MartijnSemester6Individual/Front-End/actions/workflows/node.js.yml)
+[![Docker CI](https://github.com/MartijnSemester6Individual/Front-End/actions/workflows/docker-image.yml/badge.svg?branch=development)](https://github.com/MartijnSemester6Individual/Front-End/actions/workflows/docker-image.yml)
+
 ## Table of contents
 - [General](#general)
 - [Linting](#linting)
