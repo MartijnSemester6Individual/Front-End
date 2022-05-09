@@ -2,16 +2,16 @@ name: Docker CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, development ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, development ]
 
 jobs:
 
   build:
 
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-20.04
+    
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image

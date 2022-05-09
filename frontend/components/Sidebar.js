@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import { HomeIcon } from '@heroicons/react/solid';
 import { signOut } from 'next-auth/react';
@@ -32,10 +33,7 @@ function Sidebar() {
         <SidebarLink text="Profile" Icon={UserIcon} />
         <SidebarLink text="More" Icon={DotsCircleHorizontalIcon} />
       </div>
-      <button
-        className="ml-auto mt-7 hidden h-12 w-56 rounded-full bg-twitter-blue text-center text-lg font-bold 
-            text-twitter-white shadow-md hover:bg-twitter-blue-hover xl:inline"
-      >
+      <button className="ml-auto mt-7 hidden h-12 w-56 rounded-full bg-twitter-blue text-center text-lg font-bold text-twitter-white shadow-md hover:bg-twitter-blue-hover xl:inline">
         Tweet
       </button>
       <div

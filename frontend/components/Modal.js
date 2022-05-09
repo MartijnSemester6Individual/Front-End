@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useRecoilState } from 'recoil';
 import { modalState, postIdState } from '../atoms/modalAtom';
 import { Dialog, Transition } from '@headlessui/react';
@@ -22,15 +23,13 @@ function Modal() {
   const [comment, setComment] = useState('');
   const router = useRouter();
 
-  const url = `http://localhost:8080/api/v2/tweets/${parseInt(postId)}`;
-
   useEffect(() => {
     const getPost = async () => {
-      const response = await axios.get(url);
+      const response = await axios.get(`http://localhost:8080/api/v2/tweets/${parseInt(postId)}`);
       setPost(response.data);
     };
     getPost();
-  }, []);
+  }, [postId]);
 
   const sendComment = async (e) => {};
 

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {
   CalendarIcon,
   ChartBarIcon,
@@ -29,7 +30,6 @@ function Input() {
   const router = useRouter();
   const [isValid, setIsValid] = useState(false);
 
-
   const addImageToPost = (e) => {
     const reader = new FileReader();
     if (e.target.files[0]) {
@@ -48,9 +48,7 @@ function Input() {
   const checkWhileTweeting = (e) => {
     setInput(e.target.value);
     checkForSpaces(input);
-
-
-  }
+  };
 
   const checkForSpaces = (value) => {
     if (!value.trim()) {
@@ -58,7 +56,7 @@ function Input() {
     } else {
       setIsValid(false);
     }
-  }
+  };
 
   const sendPost = () => {
     if (loading) return;
@@ -103,8 +101,9 @@ function Input() {
 
   return (
     <div
-      className={`no-scrollbar flex space-x-3 border-b border-gray-700 p-3 ${loading && 'opacity-60'
-        }`}
+      className={`no-scrollbar flex space-x-3 border-b border-gray-700 p-3 ${
+        loading && 'opacity-60'
+      }`}
     >
       <img src={session.user.image} alt="" className="h-11 w-11 cursor-pointer rounded-full" />
       <div className="w-full divide-y divide-gray-700">
@@ -168,14 +167,10 @@ function Input() {
                 />
               )}
             </div>
-            <div
-              className="text-white pl-48"
-            >
-              {isValid.toString()}
-            </div>
+            <div className="pl-48 text-white">{isValid.toString()}</div>
             <button
               className="rounded-full bg-[#1d9bf0] px-4 py-1.5 font-bold text-white shadow-md hover:bg-twitter-blue-hover disabled:cursor-default disabled:opacity-50 disabled:hover:bg-twitter-blue"
-              disabled={!input && !selectedFile || isValid}
+              disabled={(!input && !selectedFile) || isValid}
               onClick={sendPost}
             >
               Tweet
