@@ -25,7 +25,9 @@ function Modal() {
 
   useEffect(() => {
     const getPost = async () => {
-      const response = await axios.get(`http://localhost:8080/api/v2/tweets/${parseInt(postId)}`);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}api/v2/tweets/${parseInt(postId)}`,
+      );
       setPost(response.data);
     };
     getPost();

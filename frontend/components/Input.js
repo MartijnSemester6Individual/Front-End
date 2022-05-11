@@ -65,7 +65,7 @@ function Input() {
     if (!isValid) {
       axios
         .post(
-          'http://localhost:8081/api/v2/tweet',
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v2/tweet`,
           {
             tweetUserId: session.user.userId,
             tweetUserName: session.user.username,
