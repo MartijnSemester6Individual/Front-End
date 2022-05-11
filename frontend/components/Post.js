@@ -26,7 +26,7 @@ function Post({ id, post, postPage }) {
   const [liked, setLiked] = useState(false);
   const router = useRouter();
 
-  const url = `http://localhost:8081/api/v2/tweets/${id}/${session.user.userId}`;
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/api/v2/tweets/${id}/${session.user.userId}`;
 
   const likePost = async () => {
     if (liked) {
