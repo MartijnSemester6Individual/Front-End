@@ -9,11 +9,24 @@ on:
 jobs:
 
   build:
-
-    runs-on: ubuntu-20.04
-    
+    runs-on: ubuntu-20.04 
     steps:
-    - uses: actions/checkout@v2
+    -
+      name: Checkout code
+      uses: actions/checkout@v2
+    -
+      name: create .env file
+      run: |
+        touch .env
+        echo NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} >> .env
+        echo NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} >> .env
+        echo NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} >> .env
+        cat .env
+      env: 
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }} 
+        NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }} 
+
     - name: Build the Docker image
       run: |
         cd frontend
