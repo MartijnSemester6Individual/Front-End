@@ -30,7 +30,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v3
       with: 
-        context: ./frontend
-        file: ./Dockerfile
+        run: cd frontend
+        file: Dockerfile
         push: true
         tags: martijnbassa/kwetter-frontend:latest
