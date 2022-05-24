@@ -27,10 +27,7 @@ jobs:
         NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }} 
         NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }} 
 
-    - name: Build and push
-      uses: docker/build-push-action@v3
-      with: 
-        run: cd frontend
-        file: Dockerfile
-        push: true
-        tags: martijnbassa/kwetter-frontend:latest
+    - name: Build the Docker image
+      run: |
+        cd frontend
+        docker build . --file Dockerfile --tag frontend:$(date +%s)
