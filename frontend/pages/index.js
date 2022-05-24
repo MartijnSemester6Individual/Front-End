@@ -20,7 +20,6 @@ const Home = ({ trendingResults, followResults }) => {
         <title>Kwetter</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main className="mx-auto flex min-h-screen max-w-[93.75em] bg-black">
         <Sidebar />
         <Feed />
