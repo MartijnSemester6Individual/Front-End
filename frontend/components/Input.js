@@ -78,9 +78,9 @@ function Input() {
             likeCount: likeCount,
           },
           {
-            headers: { 
-               Authorization: '' + session.accessToken,
-              'Content-Type': 'application/json' 
+            headers: {
+              Authorization: '' + session.accessToken,
+              'Content-Type': 'application/json',
             },
           },
         )
@@ -170,10 +170,9 @@ function Input() {
                 />
               )}
             </div>
-            
+
             <button
               className="rounded-full bg-[#1d9bf0] px-4 py-1.5 font-bold text-white shadow-md hover:bg-twitter-blue-hover disabled:cursor-default disabled:opacity-50 disabled:hover:bg-twitter-blue"
-              
               onClick={sendPost}
             >
               Tweet
