@@ -78,7 +78,10 @@ function Input() {
             likeCount: likeCount,
           },
           {
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              Authorization: '' + session.accessToken,
+              'Content-Type': 'application/json',
+            },
           },
         )
         .then(function (response) {
@@ -167,10 +170,9 @@ function Input() {
                 />
               )}
             </div>
-            <div className="pl-48 text-white">{isValid.toString()}</div>
+
             <button
               className="rounded-full bg-[#1d9bf0] px-4 py-1.5 font-bold text-white shadow-md hover:bg-twitter-blue-hover disabled:cursor-default disabled:opacity-50 disabled:hover:bg-twitter-blue"
-              disabled={(!input && !selectedFile) || isValid}
               onClick={sendPost}
             >
               Tweet

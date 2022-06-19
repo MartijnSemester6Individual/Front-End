@@ -1,4 +1,5 @@
 const config = {
+  //globalSetup: require.resolve('./global-setup'),
   testDir: '__tests__/e2e',
 
    // Forbid test.only on CI

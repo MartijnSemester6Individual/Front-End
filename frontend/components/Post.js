@@ -11,7 +11,7 @@ import {
 import { HeartIcon as HeartIconFilled, ChatIcon as ChatIconFilled } from '@heroicons/react/solid';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Moment from 'react-moment';
 import { useRecoilState } from 'recoil';
 import { modalState, postIdState } from '../atoms/modalAtom';
@@ -26,7 +26,7 @@ function Post({ id, post, postPage }) {
   const [liked, setLiked] = useState(false);
   const router = useRouter();
 
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/api/v2/tweets/${id}/${session.user.userId}`;
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/api/v2/delete/${id}`;
 
   const likePost = async () => {
     if (liked) {
@@ -34,13 +34,18 @@ function Post({ id, post, postPage }) {
   };
 
   const deletePost = async (e) => {
-    await axios.delete(url);
+    await axios.delete(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: '' + session.accessToken,
+      },
+    });
   };
 
   return (
     <div
       className="flex cursor-pointer border-b border-gray-700 p-3"
-      onClick={() => router.push(`/${post.tweetUserTag}/status/${id}`)}
+      //onClick={() => router.push(`/${post.tweetUserTag}/status/${id}`)}
     >
       {!postPage && (
         <img
@@ -99,11 +104,6 @@ function Post({ id, post, postPage }) {
             <DotsHorizontalIcon className="h-5 text-twitter-tag-colour group-hover:text-[#1d9bf0]" />
           </div>
         </div>
-        {postPage && (
-          <p className="mt-0.5 text-[0.9375em] text-twitter-white sm:text-base">
-            {post?.tweetText}
-          </p>
-        )}
         <img src={post?.tweetImage} alt="" className="mr-2 max-h-[30em] rounded-2xl object-cover" />
         <div
           className={`flex w-10/12 justify-between text-twitter-tag-colour ${
@@ -114,16 +114,12 @@ function Post({ id, post, postPage }) {
             className="group flex items-center space-x-1"
             onClick={(e) => {
               e.stopPropagation();
-              setPostId(id);
-              setIsOpen(true);
+              deletePost();
             }}
           >
-            <div className="icon group-hover:bg-twitter-blue-hover group-hover:bg-opacity-10">
-              <ChatIcon className="h-5 group-hover:text-twitter-blue-hover" />
+            <div className="icon group-hover:bg-red-600/10">
+              <TrashIcon className="h-5 group-hover:text-red-600" />
             </div>
-            {comments.length > 0 && (
-              <span className="text-sm group-hover:text-twitter-blue-hover">{comments.length}</span>
-            )}
           </div>
 
           {session.user.userId == post?.tweetUserId ? (
@@ -131,16 +127,27 @@ function Post({ id, post, postPage }) {
               className="group flex items-center space-x-1"
               onClick={(e) => {
                 e.stopPropagation();
-                deletePost();
-                router.reload('/');
+                setPostId(id);
+                setIsOpen(true);
               }}
             >
-              <div className="icon group-hover:bg-red-600/10">
-                <TrashIcon className="h-5 group-hover:text-red-600" />
+              <div className="icon group-hover:bg-twitter-blue-hover group-hover:bg-opacity-10">
+                <ChatIcon className="h-5 group-hover:text-twitter-blue-hover" />
               </div>
+              {comments.length > 0 && (
+                <span className="text-sm group-hover:text-twitter-blue-hover">
+                  {comments.length}
+                </span>
+              )}
             </div>
           ) : (
-            <div className="group flex items-center space-x-1">
+            <div
+              className="group flex items-center space-x-1"
+              onClick={(e) => {
+                e.stopPropagation();
+                deletePost();
+              }}
+            >
               <div className="icon group-hover:bg-green-500/10">
                 <SwitchHorizontalIcon className="h-5 group-hover:text-green-500" />
               </div>
@@ -168,10 +175,22 @@ function Post({ id, post, postPage }) {
             )}
           </div>
 
-          <div className="icon group">
+          <div
+            className="icon group"
+            onClick={(e) => {
+              e.stopPropagation();
+              likePost();
+            }}
+          >
             <ShareIcon className="h-5 group-hover:text-[#1d9bf0]" />
           </div>
-          <div className="icon group">
+          <div
+            className="icon group"
+            onClick={(e) => {
+              e.stopPropagation();
+              likePost();
+            }}
+          >
             <ChartBarIcon className="h-5 group-hover:text-[#1d9bf0]" />
           </div>
         </div>

@@ -46,6 +46,7 @@ export default NextAuth({
         const beforeDecode = user;
         const decodedToken = jwt_decode(beforeDecode);
         token.user = decodedToken;
+        token.accessToken = user;
       }
       return token;
     },
@@ -53,7 +54,7 @@ export default NextAuth({
       if (token !== null) {
         session.user = token.user;
         session.user.userId = session.user.jti;
-        console.log(session);
+        session.accessToken = token.accessToken;
       } else if (typeof token !== typeof undefined) {
         session.token = token;
       }

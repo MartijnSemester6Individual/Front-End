@@ -3,17 +3,23 @@ import Input from './Input';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Post from './Post';
+import { useSession } from 'next-auth/react';
 
 function Feed() {
   const [posts, setPosts] = useState([]);
-
+  const { data: session } = useSession();
   useEffect(() => {
     const getPosts = async () => {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/tweets`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/tweets`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: '' + session.accessToken,
+        },
+      });
       setPosts(response.data);
     };
     getPosts();
-  }, []);
+  });
 
   return (
     <div className="max-w-2xl flex-grow border-l border-r border-gray-700 sm:ml-[4.5625em] xl:ml-[23.125em] ">
