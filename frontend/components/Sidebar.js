@@ -3,7 +3,8 @@ import Image from 'next/image';
 import { HomeIcon } from '@heroicons/react/solid';
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
-
+import DeleteConfirmation from './DeleteConfirmation';
+import { useState } from 'react';
 import {
   HashtagIcon,
   BellIcon,
@@ -13,11 +14,14 @@ import {
   UserIcon,
   DotsCircleHorizontalIcon,
   DotsHorizontalIcon,
+  TrashIcon
 } from '@heroicons/react/outline';
 import SidebarLink from './SidebarLink';
 
 function Sidebar() {
   const { data: session } = useSession();
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className="fixed hidden h-full flex-col items-center p-2 sm:flex xl:w-[340px] xl:items-start">
       <div className="hoverAnimation flex h-14 w-14 items-center justify-center p-0 xl:ml-24">
@@ -32,8 +36,19 @@ function Sidebar() {
         <SidebarLink text="Lists" Icon={ClipboardListIcon} />
         <SidebarLink text="Profile" Icon={UserIcon} />
         <SidebarLink text="More" Icon={DotsCircleHorizontalIcon} />
+        <div>
+
+          <button className="hoverAnimationDelete flex items-center justify-center space-x-3 text-xl text-twitter-white xl:justify-start" onClick={() => setIsOpen(!isOpen)}>
+            <TrashIcon className="h-7"/>
+            <p className="hidden xl:inline">Delete profile</p>
+          </button>
+        </div>
       </div>
-      <button className="ml-auto mt-7 hidden h-12 w-56 rounded-full bg-twitter-blue text-center text-lg font-bold text-twitter-white shadow-md hover:bg-twitter-blue-hover xl:inline">
+
+      <button className="ml-auto mt-7 hidden h-12 w-56 rounded-full bg-twitter-blue text-center text-lg font-bold
+       text-twitter-white shadow-md hover:bg-twitter-blue-hover xl:inline"
+
+      >
         Tweet
       </button>
       <div
@@ -47,7 +62,9 @@ function Sidebar() {
         </div>
         <DotsHorizontalIcon className="ml-10 hidden h-5 xl:inline" />
       </div>
+      {isOpen && <DeleteConfirmation isOpen={isOpen} setIsOpen={setIsOpen} id={session.user.userId} />}
     </div>
+
   );
 }
 
