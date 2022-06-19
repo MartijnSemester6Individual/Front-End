@@ -62,7 +62,7 @@ function Login({ csrfToken }) {
               className="mt-4 min-w-full cursor-pointer rounded-xl bg-black p-3 text-center text-white"
               onClick={(e) => signInUser(e)}
             >
-              Login to 4Energy
+              Login to Kwetter
             </button>
           </form>
 
